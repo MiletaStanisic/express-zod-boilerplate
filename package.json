@@ -27,6 +27,7 @@
     "skills:verify": "node scripts/skills-verify.mjs"
   },
   "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.5.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
