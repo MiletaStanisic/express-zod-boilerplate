@@ -20,8 +20,12 @@ npm run dev          # http://localhost:4300
 | `npm run start` | Run compiled build |
 | `npm run lint` | ESLint with TypeScript type-checking |
 | `npm run test` | Vitest unit + integration tests |
-| `npm run skills:sync` | Pin Vercel agent skills from lockfile |
-| `npm run skills:verify` | Verify locked skills + local governance skill |
+| `npm run skills:sync` | Sync optional vendor skills from lockfile |
+| `npm run skills:verify` | Verify required local backend skills (and optional vendor skills) |
+| `npm run docker:up` | Start API + Postgres + Redis with Docker Compose |
+| `npm run docker:down` | Stop Docker Compose services |
+| `npm run docker:logs` | Tail Docker app logs |
+| `npm run docker:validate` | Validate compose syntax |
 
 ## Architecture
 
@@ -41,6 +45,8 @@ src/
 |---|---|---|
 | `PORT` | `4300` | HTTP listen port |
 | `NODE_ENV` | `development` | `development` \| `test` \| `production` |
+| `DATABASE_URL` | `postgresql://app:app@localhost:5437/app?schema=public` | Local database URL |
+| `REDIS_URL` | `redis://localhost:6383` | Local Redis URL |
 
 ## API Reference
 
@@ -128,6 +134,19 @@ Content-Type: application/json
 Response `200` — updated incident object.  
 Response `422` `INVALID_TRANSITION` — when transition is not allowed.  
 Response `404` `NOT_FOUND` — unknown incident id.
+
+## Docker local dev
+
+```bash
+cp .env.example .env
+npm run docker:up
+```
+
+Default containerized stack:
+
+- API: `http://localhost:4300`
+- Postgres: `localhost:5437`
+- Redis: `localhost:6383`
 
 ---
 
