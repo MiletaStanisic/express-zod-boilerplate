@@ -1,20 +1,13 @@
-import { randomUUID } from "node:crypto";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
-import { z } from "zod";
-
-const createTaskSchema = z.object({
-  title: z.string().min(3)
-});
-
-const tasks: Array<{ id: string; title: string; done: boolean }> = [
-  {
-    id: "seed-1",
-    title: "Document deployment checklist",
-    done: false
-  }
-];
+import { errorHandler } from "./middleware/errorHandler.js";
+import { alertsRouter } from "./routes/alerts.js";
+import { dashboardRouter } from "./routes/dashboard.js";
+import { healthRouter } from "./routes/health.js";
+import { incidentsRouter } from "./routes/incidents.js";
+import { maintenanceWindowsRouter } from "./routes/maintenanceWindows.js";
+import { teamsRouter } from "./routes/teams.js";
 
 export function buildApp() {
   const app = express();
@@ -23,35 +16,14 @@ export function buildApp() {
   app.use(cors());
   app.use(express.json());
 
-  app.get("/health", (_req, res) => {
-    res.json({
-      status: "ok",
-      service: "express-zod-boilerplate"
-    });
-  });
+  app.use(healthRouter);
+  app.use(incidentsRouter);
+  app.use(alertsRouter);
+  app.use(maintenanceWindowsRouter);
+  app.use(teamsRouter);
+  app.use(dashboardRouter);
 
-  app.get("/tasks", (_req, res) => {
-    res.json({ items: tasks });
-  });
-
-  app.post("/tasks", (req, res) => {
-    const parsed = createTaskSchema.safeParse(req.body);
-    if (!parsed.success) {
-      return res.status(400).json({
-        error: "INVALID_BODY",
-        issues: parsed.error.flatten()
-      });
-    }
-
-    const task = {
-      id: randomUUID(),
-      title: parsed.data.title,
-      done: false
-    };
-    tasks.unshift(task);
-
-    return res.status(201).json(task);
-  });
+  app.use(errorHandler);
 
   return app;
 }
