@@ -20,6 +20,9 @@ npm run dev          # http://localhost:4300
 | `npm run start` | Run compiled build |
 | `npm run lint` | ESLint with TypeScript type-checking |
 | `npm run test` | Vitest unit + integration tests |
+| `npm run db:migrate` | Apply TypeORM migrations |
+| `npm run db:migrate:revert` | Revert last TypeORM migration |
+| `npm run db:migrate:status` | Show pending migration status |
 | `npm run skills:sync` | Sync optional vendor skills from lockfile |
 | `npm run skills:verify` | Verify required local backend skills (and optional vendor skills) |
 | `npm run docker:up` | Start API + Postgres + Redis with Docker Compose |
@@ -47,6 +50,16 @@ src/
 | `NODE_ENV` | `development` | `development` \| `test` \| `production` |
 | `DATABASE_URL` | `postgresql://app:app@localhost:5437/app?schema=public` | Local database URL |
 | `REDIS_URL` | `redis://localhost:6383` | Local Redis URL |
+
+## Persistence baseline
+
+This repo now includes TypeORM baseline files:
+
+- `src/db/data-source.ts`
+- `src/db/migrations/1744139700000-init-ops-schema.ts`
+- migration runners in `src/db/*.ts`
+
+Current API still runs on in-memory services by default; TypeORM layer is prepared for incremental migration.
 
 ## API Reference
 
