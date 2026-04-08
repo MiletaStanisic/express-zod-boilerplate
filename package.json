@@ -1,5 +1,5 @@
 {
-  "name": "backend-express-zod-boilerplate",
+  "name": "express-zod-boilerplate",
   "version": "0.1.0",
   "private": false,
   "description": "Production-oriented Express + TypeScript backend boilerplate",

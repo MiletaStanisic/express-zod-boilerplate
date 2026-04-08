@@ -26,7 +26,7 @@ export function buildApp() {
   app.get("/health", (_req, res) => {
     res.json({
       status: "ok",
-      service: "backend-express-zod-boilerplate"
+      service: "express-zod-boilerplate"
     });
   });
 

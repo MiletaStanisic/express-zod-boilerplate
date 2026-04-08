@@ -1,4 +1,4 @@
-# backend-express-zod-boilerplate
+# express-zod-boilerplate
 
 Express + TypeScript starter for backend demo apps with strict lint/test/build and agent governance.
 
